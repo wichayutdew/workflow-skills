@@ -1,8 +1,9 @@
 # Step: plan.md
 
 ## Agent Profile (Embedded)
+Agent: `planner`
 
-Agent: `planner` (from `.agents/agents/planner.md`)
+Agent: `planner` (profile embedded)planner.md`)
 
 ````markdown
 ---

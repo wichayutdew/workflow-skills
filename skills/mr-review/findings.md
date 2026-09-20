@@ -1,8 +1,9 @@
 # Step: findings.md
 
 ## Agent Profile (Embedded)
+Agent: `reviewer`
 
-Agent: `reviewer` (from `.agents/agents/reviewer.md`)
+Agent: `reviewer` (profile embedded)reviewer.md`)
 
 ````markdown
 ---

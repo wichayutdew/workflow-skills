@@ -1,8 +1,8 @@
 # Step: publish-remote.md
 
 ## Agent Profile (Embedded)
+Agent: `scout`
 
-Agent: `scout` (from `.agents/agents/scout.md`)
 
 ````markdown
 ---

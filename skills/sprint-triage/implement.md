@@ -1,8 +1,9 @@
 # Step: implement.md
 
 ## Agent Profile (Embedded)
+Agent: `worker`
 
-Agent: `worker` (from `.agents/agents/worker.md`)
+Agent: `worker` (profile embedded)worker.md`)
 
 ````markdown
 ---

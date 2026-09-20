@@ -12,4 +12,4 @@ permissions: [read, ls, bash, mcp]; mcp: [atlassian, context7, sourcegraph, glea
 ## Transition Rules (per original original workflow `investigate.workflow.yaml`)
 - investigate sub-steps: intake→plan (ready); intake (gaps); plan→research (ready); intake (gaps); $pause (blocked); research→validate (ready); plan (gaps); validate→write-report (ready); research (gaps); $pause (blocked); write-report→$done (ready); $pause (blocked)
 ## Agent Profiles
-Embedded per sub-step (`.agents/agents/*.md` profile included in each `.md`).
+Embedded per sub-step (embedded agent profile: *.md` profile included in each `.md`).
