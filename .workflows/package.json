@@ -1,1 +1,16 @@
-{"name":"workflow-skills","skills":".","workflows":"."}
+{
+  "name": "workflow-skills",
+  "version": "1.0.0",
+  "description": "Portable workflow skills: work, mr-review, mr-comment, investigate, sprint-triage. Fresh agent per step with embedded agent profiles.",
+  "skills": [
+    ".workflows/work",
+    ".workflows/mr-review",
+    ".workflows/mr-comment",
+    ".workflows/investigate",
+    ".workflows/sprint-triage"
+  ],
+  "entry": ".workflows",
+  "agent_profiles_embedded": true,
+  "harness_support": ["pi", "chatgpt", "claude-code", "opencode", "codex"]
+}
+{"install":"npx skills add wichayutdew/workflow-skills","skills_path":".workflows/","embedded_agents":true,"harnesses":["pi","chatgpt","claude-code","opencode","codex"]}
