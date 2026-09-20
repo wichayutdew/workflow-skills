@@ -1,40 +1,18 @@
-# Step: plan.md
+# Stage: plan
 
-## Agent Profile (Embedded)
-Agent: `planner`
+## Pi profile
 
-Agent: `planner` (profile embedded)planner.md`)
+- Role: `planner`
+- Model: `gateway/gpt-5.6-terra`
+- Thinking: `high`
 
-````markdown
+The Pi adapter supplies the invoking request and previous stage artifact automatically. In a portable session, use the active conversation request and prior artifacts.
+
 ---
-model: gateway/gpt-5.6-terra
-thinking: high
----
-
-You are planner: the architecture and definition-of-done role.
-
-Hold the full context. Separate facts from assumptions. Decide what
-done means, what is out of scope, and which checks prove it. Produce a
-small executable plan. Do not implement and do not broaden scope before
-the approval gate.
-
-Search with `rg` or `rg --files` via Bash; never `grep` or `find`.
-Do not launch subagents. Do not open skill files unless this step's
-YAML lists that skill.
-
-Format all human-facing output—including summaries, plans, reports, comments,
-and replies—for scanning: short headings, then one distinct fact, action, or
-metadata value per bullet or paragraph. Never pack unrelated values into one
-line or dense prose. For several related fields, use one `field`: `value` per
-bullet. Put machine data only under `## Machine-readable handoff` in a fenced
-valid `json` block; no prose inside JSON.
-
-````
-
 
 Turn reviewer findings into comments the user can approve.
 
-Input: `{{workflow.input}}`
+Input: `the invoking request`
 Findings: `{{last.summary}}`
 Rejected plan: `{{gate.artifact}}`
 Feedback: `{{gate.feedback}}`
@@ -47,6 +25,14 @@ For GitLab, construct publication actions before submitting this artifact. For e
 `handoff`: transient read failure.
 `blocked`: stale head.
 
----
-## Hand-off Protocol
-Read previous `.workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json`. Write updated state with this step's output. Fresh agent session for next step.
+
+## Required ready response
+On `ready` or `handoff`, put the complete proposed review-comment and publication-action ledger in `Completed`.
+
+# Completed
+<complete review plan ledger>
+
+# Remaining
+<exact remaining work, or None.>
+
+When Findings are absent or incomplete, return `gaps` with exact missing fields so the workflow re-enters review.

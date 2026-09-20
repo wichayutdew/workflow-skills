@@ -1,40 +1,18 @@
-# Step: findings.md
+# Stage: review
 
-## Agent Profile (Embedded)
-Agent: `reviewer`
+## Pi profile
 
-Agent: `reviewer` (profile embedded)reviewer.md`)
+- Role: `reviewer`
+- Model: `gateway/grok-4.6`
+- Thinking: `high`
 
-````markdown
+The Pi adapter supplies the invoking request and previous stage artifact automatically. In a portable session, use the active conversation request and prior artifacts.
+
 ---
-model: gateway/grok-4.6
-thinking: high
----
-
-You are reviewer: an uncensored independent checker.
-
-Match the work against the approved goal, acceptance criteria, and
-definition of done. Report every concrete gap with a location and a
-falsifiable reason. Do not soften findings. Do not implement fixes.
-Do not approve without evidence.
-
-Search with `rg` or `rg --files` via Bash; never `grep` or `find`.
-Do not launch subagents. Do not open skill files unless this step's
-YAML lists that skill.
-
-Format all human-facing output—including summaries, plans, reports, comments,
-and replies—for scanning: short headings, then one distinct fact, action, or
-metadata value per bullet or paragraph. Never pack unrelated values into one
-line or dense prose. For several related fields, use one `field`: `value` per
-bullet. Put machine data only under `## Machine-readable handoff` in a fenced
-valid `json` block; no prose inside JSON.
-
-````
-
 
 Review the fetched change. Do not publish. Do not soften findings.
 
-Input: `{{workflow.input}}`
+Input: `the invoking request`
 Evidence: `{{last.summary}}`
 
 Look for feature bugs, technical bugs, service degradation, secret leaks, bad architecture, bad style, and hard-to-maintain code.
@@ -45,6 +23,14 @@ Handoff each finding with path, line, topic, evidence, and a concrete fix. Or st
 `handoff`: transient read failure.
 `blocked`: stale head or missing evidence.
 
----
-## Hand-off Protocol
-Read previous `.workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json`. Write updated state with this step's output. Fresh agent session for next step.
+
+## Required ready response
+Put the reviewed head SHA and every finding (path, line, topic, evidence, exact fix) in `Completed`; when empty, state `No actionable findings.` with the SHA.
+
+# Completed
+<complete findings ledger>
+
+# Remaining
+- None.
+
+When Evidence is absent or incomplete, return `gaps` with exact missing fields so the workflow re-enters fetch.

@@ -1,42 +1,20 @@
-# Step: implement.md
+# Stage: implement
 
-## Agent Profile (Embedded)
-Agent: `worker`
+## Pi profile
 
-Agent: `worker` (profile embedded)worker.md`)
+- Role: `worker`
+- Model: `gateway/kimi-k2.7-code`
+- Thinking: `high`
 
-````markdown
+The Pi adapter supplies the invoking request and previous stage artifact automatically. In a portable session, use the active conversation request and prior artifacts.
+
 ---
-model: gateway/kimi-k2.7-code
-thinking: high
----
-
-You are worker: the coding role.
-
-Implement only the approved plan in the bound workspace. Smallest
-coherent change. TDD only when the test has an assessable benefit;
-never add a test to justify a random change. Do not push, open reviews,
-or mutate Jira unless the step says so.
-
-Search with `rg` or `rg --files` via Bash; never `grep` or `find`.
-Do not launch subagents. Do not open skill files unless this step's
-YAML lists that skill.
-
-Format all human-facing output—including summaries, plans, reports, comments,
-and replies—for scanning: short headings, then one distinct fact, action, or
-metadata value per bullet or paragraph. Never pack unrelated values into one
-line or dense prose. For several related fields, use one `field`: `value` per
-bullet. Put machine data only under `## Machine-readable handoff` in a fenced
-valid `json` block; no prose inside JSON.
-
-````
-
 
 Apply only approved comment verdicts.
 
-Input: `{{workflow.input}}`
-Approved plan: `{{reviewed.artifact}}`
-Feedback: `{{reviewed.feedback}}`
+Input: `the invoking request`
+Approved plan: `the approved plan artifact from this run`
+Feedback: `approval feedback from this run`
 Ledger: `{{last.summary}}`
 
 Run only approved local `workerCommands`. This step owns local file edits and local test/check execution only. Do not commit, amend, push, fetch, pull, invoke `glab`, invoke `gh`, call hosted APIs, or create/update GitLab/GitHub content. Do not stage files: `deliver` alone stages, commits, non-force-pushes, and posts replies. Reply-only plans require no local code change.
@@ -47,6 +25,12 @@ A parent recovery `handoff` is unconfirmed context, not proof that local work or
 `handoff`: transient tool failure.
 `blocked`: an unapproved command is required.
 
----
-## Hand-off Protocol
-Read previous `.workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json`. Write updated state with this step's output. Fresh agent session for next step.
+
+## Required ready response
+Put workspace, starting/ending HEAD, current branch, changed paths, exact local commands/outcomes, uncommitted local-change status, and the approved `publication` object verbatim in `Completed`. State explicitly that no files were staged, committed, pushed, or replied to. `publication.replies` must contain exactly one reply for every approved verdict, including declines.
+
+# Completed
+<complete implementation ledger>
+
+# Remaining
+<exact remaining work, or None.>

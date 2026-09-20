@@ -1,39 +1,41 @@
 ---
 name: work
-description: Use when running the full agent work pipeline (intake -> plan -> workspace -> implement -> verify -> publish) with fresh agent per step.
+description: "Execute a guarded software-work pipeline from a natural-language request: intake, approval-gated planning, workspace preparation, implementation, verification, and publication."
 ---
 
-# Work Pipeline
+# Work
 
-Master skill for `/work`. Invokes sub-steps sequentially with handoff via `.workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json`. Each step reads embedded agent profile: <agent>.md` and starts a fresh agent context.
+## Portable execution contract
 
-Transition support: verify (and other review steps) can circle back to previous steps (e.g., implement) when `.workflows/state/*.json` status is `gaps`, `back`, or `invalid`. `invoke.py` reads previous state and prints back-circulation.
+Treat the text that invoked this skill as the authoritative work request. Derive repository, Git, Jira, and hosted-review context from that request and the active workspace. Do not require workflow template variables, a restart workspace, a session ID, or a state-file path.
 
-## Gate (Plan Step — Artifact Contract)
-When running `plan.md`, enforce artifactContract:
-- maxChars: 30000
-- Required headings: Goal/Acceptance Criteria, Non Goal, Implementation Steps and Tests, Validation, Risks/Decisions Needed, Publications Contract/Metadata, Execution appendix (machine-readable JSON)
+For each stage, use a fresh subagent whenever the harness supports subagents. Give that subagent only the invoking request, the prior stage artifact, and the linked stage prompt; do not give it or rely on parent conversational context. The parent retains only the resulting artifact and declared outcome before starting the next fresh subagent. If the harness has no subagent capability, load the stage prompt in the active session and carry prior artifacts there. Ask one focused question only when a required business fact, access grant, or authority cannot be discovered. At an approval gate, stop for explicit human approval before continuing. A compatible harness may use equivalent authenticated tools; otherwise report that dependency as blocked.
 
-Sub-steps: `intake.md` → `plan.md` → `prepare-workspace`* → `implement.md` → `verify.md` → `publish.md` → done
+## Stages
 
-* Note: `work/prepare-workspace.md` mapped to workspace binding; if workspace creation fails, transition `gaps: plan`.
+| Stage | Prompt | Pi role / model | Outcomes |
+| --- | --- | --- | --- |
+| intake | [intake.md](intake.md) | scout — `gateway/gemini-3.8-flash`, low | `ready` → plan; `blocked` → pause; `handoff` → intake |
+| plan | [plan.md](plan.md) | planner — `gateway/gpt-5.6-terra`, high | `ready` → prepare-workspace; `gaps` → intake; `blocked` → pause; `handoff` → plan |
+| prepare-workspace | [prepare-workspace.md](prepare-workspace.md) | scout — `gateway/gemini-3.8-flash`, low | `ready` → implement; `gaps` → plan; `blocked` → pause; `handoff` → prepare-workspace |
+| implement | [implement.md](implement.md) | worker — `gateway/kimi-k2.7-code`, high | `ready` → verify; `blocked` → pause; `handoff` → implement |
+| verify | [verify.md](verify.md) | reviewer — `gateway/grok-4.6`, high | `ready` → publish; `gaps` → implement; `blocked` → pause; `handoff` → verify |
+| publish | [publish-remote.md](publish-remote.md) | scout — `gateway/gemini-3.8-flash`, low | `ready` → done; `blocked` → pause; `handoff` → publish |
 
-Transition rules (per original `.workflows/*.yaml`):
-- intake: `ready` → plan; `blocked` → $pause; `handoff` → intake; `gaps` → intake (if missing brief/Jira)
-- plan: `ready` → prepare-workspace; `gaps` → intake (missing evidence); `blocked` → $pause; `handoff` → plan
-- implement: `ready` → verify; `gaps` → plan; `blocked` → $pause; `handoff` → implement
-- verify: `ready` → publish; `gaps` → implement (missing goal/proof); `blocked` → $pause; `handoff` → verify
-- publish: `ready` → $done; `blocked` → $pause; `handoff` → publish
-Agent roles: scout, planner, worker, reviewer, scout.
+## Plan approval gate
 
-## Invocation
-Run `.workflows/invoke.py <step-file>` (e.g., `.workflows/invoke.py .agents/skills/work/intake.md`).
-The script parses `Agent profile:` and `model:` from embedded frontmatter, reads embedded agent profile: <agent>.md`, and passes agent config + step prompt + `.workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json` to a fresh agent session.
+Before `plan` can continue with `ready`, obtain explicit approval for an artifact with these exact level-2 headings:
 
-## Extension Features Ported
-- maxStepVisits: 30
-- summaryMaxChars: 30000
-- permissions: [read, ls, bash, edit, write, mcp] per step; bash unrestricted
-- mcp: [atlassian, context7, sourcegraph, glean, gh_grep, github/*, gitlab] (step-specific)
-- gate (plan step only): artifactContract with maxChars 30000; required headings per original YAML
-- workspace (prepare-workspace only): bindOn [ready], allowedRoots [~/repositories/worktrees]
+- `Goal/Acceptance Criteria`
+- `Non Goal`
+- `Implementation Steps and Tests`
+- `Validation`
+- `Risks/Decisions Needed`
+- `Publications Contract/Metadata`
+- `Execution appendix (machine-readable)`
+
+When Plannotator is available, submit the complete artifact to Plannotator and wait for its approval before continuing. Otherwise, stop in the conversation for explicit human approval rather than claiming an extension validates it.
+
+## Pi adapter
+
+For fresh Pi processes with the table's model and thinking preferences, run `python3 scripts/run-pi.py "<natural-language request>"`. When running inside Herdr, the adapter opens a background horizontal split for each stage, closes that exact pane after its artifact is captured, and never closes the caller pane. The adapter creates its own state and stops at this approval gate. If Pi or a requested model is unavailable, execute the documented stages in the active session instead.

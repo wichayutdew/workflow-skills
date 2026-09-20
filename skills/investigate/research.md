@@ -1,38 +1,20 @@
-# Step: research.md
+# Stage: research
 
-## Agent Profile (Embedded)
-Agent: `scout`
+## Pi profile
 
+- Role: `planner`
+- Model: `gateway/gpt-5.6-terra`
+- Thinking: `high`
 
-````markdown
+The Pi adapter supplies the invoking request and previous stage artifact automatically. In a portable session, use the active conversation request and prior artifacts.
+
 ---
-model: gateway/gemini-3.8-flash
-thinking: low
----
-
-You are scout: a fast mechanical agent.
-
-Follow the step prompt exactly. Collect or apply only what it names.
-Do not invent architecture, scope, or extra work. Prefer MCP over CLI
-for GitHub and GitLab. Search with `rg` or `rg --files` via Bash; never
-`grep` or `find`. Do not launch subagents. Do not open skill files
-unless this step's YAML lists that skill.
-
-Format all human-facing output—including summaries, plans, reports, comments,
-and replies—for scanning: short headings, then one distinct fact, action, or
-metadata value per bullet or paragraph. Never pack unrelated values into one
-line or dense prose. For several related fields, use one `field`: `value` per
-bullet. Put machine data only under `## Machine-readable handoff` in a fenced
-valid `json` block; no prose inside JSON.
-
-````
-
 
 Deep-research the approved scope. Do not write the destination file yet.
 
-Input: `{{workflow.input}}`
-Approved scope: `{{reviewed.artifact}}`
-Feedback: `{{reviewed.feedback}}`
+Input: `the invoking request`
+Approved scope: `the approved plan artifact from this run`
+Feedback: `approval feedback from this run`
 Prior draft: `{{last.summary}}`
 
 Use only resources justified in the scope (Sourcegraph, Glean, Grafana, Superset, Query Writer, Slack, GitLab, Bash). Search with `rg` via Bash.
@@ -49,6 +31,22 @@ Handoff a complete draft:
 
 Each story:
 
----
-## Hand-off Protocol
-Read previous `.workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json`. Write updated state with this step's output. Fresh agent session for next step.
+## Brief Title
+## Brief description
+## Things to implement
+## Acceptance Criteria
+## Dependency
+
+`ready`: draft complete with cited evidence.
+`handoff`: transient tool failure.
+`blocked`: required evidence inaccessible.
+
+
+## Required ready response
+Put the complete research draft in `Completed`, including every required heading, story, citation, source identity, and unresolved evidence gap. On `handoff`, retain the complete partial draft and exact remaining research.
+
+# Completed
+<complete draft with cited evidence>
+
+# Remaining
+<exact remaining work, or None.>

@@ -1,9 +1,6 @@
 {
   "name": "workflow-skills",
   "version": "1.0.0",
-  "description": "Ported from original workflow harness. Fresh agent per step with embedded profiles.",
-  "skills": "skills",
-  "entry": "skills",
-  "embedded_agents": true,
-  "harnesses": ["pi", "chatgpt", "claude-code", "opencode", "codex"]
+  "description": "Portable guided workflow skills with an optional Pi process adapter.",
+  "skills": "skills"
 }

@@ -1,39 +1,22 @@
-# Step: publish.md
+# Stage: publish
 
-## Agent Profile (Embedded)
-Agent: `scout`
+## Pi profile
 
+- Role: `scout`
+- Model: `gateway/gemini-3.8-flash`
+- Thinking: `low`
 
-````markdown
+The Pi adapter supplies the invoking request and previous stage artifact automatically. In a portable session, use the active conversation request and prior artifacts.
+
 ---
-model: gateway/gemini-3.8-flash
-thinking: low
----
-
-You are scout: a fast mechanical agent.
-
-Follow the step prompt exactly. Collect or apply only what it names.
-Do not invent architecture, scope, or extra work. Prefer MCP over CLI
-for GitHub and GitLab. Search with `rg` or `rg --files` via Bash; never
-`grep` or `find`. Do not launch subagents. Do not open skill files
-unless this step's YAML lists that skill.
-
-Format all human-facing output—including summaries, plans, reports, comments,
-and replies—for scanning: short headings, then one distinct fact, action, or
-metadata value per bullet or paragraph. Never pack unrelated values into one
-line or dense prose. For several related fields, use one `field`: `value` per
-bullet. Put machine data only under `## Machine-readable handoff` in a fenced
-valid `json` block; no prose inside JSON.
-
-````
-
 
 Push the KB branch, open the MR, and insert the human guide at the top of Confluence. Prefer MCP.
 
-Input: `{{workflow.input}}`
-Approved plan: `{{reviewed.artifact}}`
+Input: `the invoking request`
+Approved plan: `the approved plan artifact from this run`
 Ledger: `{{last.summary}}`
 
+Read `~/.pi/agent/workflows/steps/sprint-triage/sprint-triage.yaml`.
 
 1. Push without force. Create the MR via GitLab MCP using the approved title and verified host template only. If none is verified, do not block or ask for confirmation: create it without description adjustment, read back its description as the template, then update only the managed region.
 2. Verify `confluence.appendMode` is `top`. Use the Atlassian MCP tool `atlassian_getConfluencePage` with the configured `cloudId`, configured `pageId`, `contentType: "page"`, and `contentFormat: "html"` to fetch the current page. Block if its version or hash drifted from the approved `Execution contract`.
@@ -45,7 +28,3 @@ Ledger: `{{last.summary}}`
 `blocked`: hash mismatch or mutation failure.
 
 When the KB publication ledger is absent or incomplete, return `gaps` with exact missing fields so the workflow re-enters implementation.
-
----
-## Hand-off Protocol
-Read previous `.workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json`. Write updated state with this step's output. Fresh agent session for next step.
