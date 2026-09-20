@@ -1,3 +1,46 @@
-# Step: research
-Agent: scout/planner/reviewer (reads .agents/agents/*.md)
-Prompt: Run step per .pi/agent/workflows/steps/investigate/research.md; read/write .workflows/state/<session-key>/state.json.
+# Step: research.md
+Agent: (scout/planner/worker/reviewer — reads .agents/agents/*.md)
+Prompt:
+
+Deep-research the approved scope. Do not write the destination file yet.
+
+Input: `{{workflow.input}}`
+Approved scope: `{{reviewed.artifact}}`
+Feedback: `{{reviewed.feedback}}`
+Prior draft: `{{last.summary}}`
+
+Use only resources justified in the scope (Sourcegraph, Glean, Grafana, Superset, Query Writer, Slack, GitLab, Bash). Search with `rg` via Bash.
+
+A parent recovery `handoff` is unconfirmed context, not proof that research was completed. Reconcile the approved scope, request, and prior draft before continuing; do not infer evidence, findings, or progress from it.
+
+Handoff a complete draft:
+
+# Brief description
+# Goal
+# Non Goal
+# Risks
+# Stories breakdown
+
+Each story:
+
+## Brief Title
+## Brief description
+## Things to implement
+## Acceptance Criteria
+## Dependency
+
+`ready`: draft complete with cited evidence.
+`handoff`: transient tool failure.
+`blocked`: required evidence inaccessible.
+
+
+## Required ready response
+Put the complete research draft in `Completed`, including every required heading, story, citation, source identity, and unresolved evidence gap. On `handoff`, retain the complete partial draft and exact remaining research.
+
+# Completed
+<complete draft with cited evidence>
+
+# Remaining
+<exact remaining work, or None.>
+
+Hand-off: read/write .workflows/state/<session-key>/state.json
