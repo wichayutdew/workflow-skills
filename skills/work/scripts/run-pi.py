@@ -87,11 +87,13 @@ def run_stage(command, artifact):
             if pane_id:
                 exit_path = artifact.with_suffix(".exit")
                 done_marker = f"__WORKFLOW_SKILLS_STAGE_DONE_{uuid.uuid4().hex}__"
-                shell_command = (
+                marker_format = "".join(f"\\{byte:03o}" for byte in done_marker.encode())
+                shell_script = (
                     f"{' '.join(shlex.quote(part) for part in command)} > {shlex.quote(str(artifact))} 2>&1; "
-                    f"status=$?; printf '%s' \"$status\" > {shlex.quote(str(exit_path))}; "
-                    f"printf '\\n{done_marker}%s\\n' \"$status\""
+                    f"set stage_status $status; printf '%s' \"$stage_status\" > {shlex.quote(str(exit_path))}; "
+                    f"printf '\\n{marker_format}%s\\n' \"$stage_status\""
                 )
+                shell_command = f"fish -c {shlex.quote(shell_script)}"
                 try:
                     subprocess.run(["herdr", "pane", "run", pane_id, shell_command], check=True, text=True, capture_output=True)
                     subprocess.run(
@@ -111,12 +113,13 @@ def run_stage(command, artifact):
 def main():
     args = parse_args()
     run_dir, state = load_run(args)
-    if not args.dry_run and not shutil.which("pi"):
+    pi_path = shutil.which("pi")
+    if not args.dry_run and not pi_path:
         raise SystemExit("Pi executable not found on PATH; use the portable skill instructions or install Pi")
     while True:
         stage = state["stage"]
         filename, role, model, thinking, routes = WORKFLOW["stages"][stage]
-        command = ["pi", "--print", "--model", model, "--thinking", thinking, "--", prompt(stage, state)]
+        command = [pi_path or "pi", "--print", "--model", model, "--thinking", thinking, "--", prompt(stage, state)]
         if args.dry_run:
             print(json.dumps({"stage": stage, "command": command[:-1] + ["<assembled prompt>"], "stateDir": str(run_dir)}, indent=2))
             return
