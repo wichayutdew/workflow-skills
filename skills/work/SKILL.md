@@ -14,7 +14,16 @@ When running `plan.md`, enforce artifactContract:
 - maxChars: 30000
 - Required headings: Goal/Acceptance Criteria, Non Goal, Implementation Steps and Tests, Validation, Risks/Decisions Needed, Publications Contract/Metadata, Execution appendix (machine-readable JSON)
 
-Sub-steps: `intake.md`, `plan.md`, `implement.md`, `verify.md`, `publish.md`
+Sub-steps: `intake.md` → `plan.md` → `prepare-workspace`* → `implement.md` → `verify.md` → `publish.md` → done
+
+* Note: `.pi/agent/workflows/steps/work/prepare-workspace.md` mapped to workspace binding; if workspace creation fails, transition `gaps: plan`.
+
+Transition rules (per original `.workflows/*.yaml`):
+- intake: `ready` → plan; `blocked` → $pause; `handoff` → intake; `gaps` → intake (if missing brief/Jira)
+- plan: `ready` → prepare-workspace; `gaps` → intake (missing evidence); `blocked` → $pause; `handoff` → plan
+- implement: `ready` → verify; `gaps` → plan; `blocked` → $pause; `handoff` → implement
+- verify: `ready` → publish; `gaps` → implement (missing goal/proof); `blocked` → $pause; `handoff` → verify
+- publish: `ready` → $done; `blocked` → $pause; `handoff` → publish
 Agent roles: scout, planner, worker, reviewer, scout.
 
 ## Invocation

@@ -34,6 +34,15 @@ valid `json` block; no prose inside JSON.
 
 Plan the work from intake. Read-only. Do not create a branch or worktree.
 
+The plan artifact must include these exact headings (per original `.pi/agent/workflows/work.workflow.yaml` gate artifactContract):
+- `## Goal / Acceptance Criteria`: observable outcome and criteria.
+- `## Non Goal`: explicitly excluded work.
+- `## Implementation Steps and Tests`: add/remove steps; test only when assessable benefit exists.
+- `## Validation`: exact independent Bash commands and expected proof.
+- `## Risks / Decisions Needed`: risks and unresolved decisions.
+- `## Publications Contract / Metadata`: provider/repo/target, source branch, semantic title, description template, traceability mode, Jira key or null.
+- `## Execution appendix (machine-readable)`: JSON with repositories (`sourceRoot`, `baseHead`, `branch`, `worker`, `reviewer`), traceability, publication (`provider`, `repository`, `sourceBranch`, `targetBranch`, `title`, `descriptionTemplate`, `managedDescription`).
+
 Authoritative work request: `{{workflow.input}}`
 Intake/recovery handoff: `{{last.summary}}`
 Rejected plan: `{{gate.artifact}}`
