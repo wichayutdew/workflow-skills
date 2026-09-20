@@ -1,1 +1,9 @@
-{"name":"workflow-skills","skills":".agents/skills","workflows":null,"entry":".agents/skills","embedded_agents":true,"harnesses":["pi","chatgpt","claude-code","opencode","codex"]}
+{
+  "name": "workflow-skills",
+  "version": "1.0.0",
+  "description": "Ported from .pi/agent/workflows. Fresh agent per step with embedded profiles.",
+  "skills": "skills",
+  "entry": "skills",
+  "embedded_agents": true,
+  "harnesses": ["pi", "chatgpt", "claude-code", "opencode", "codex"]
+}
