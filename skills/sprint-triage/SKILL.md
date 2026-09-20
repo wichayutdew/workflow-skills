@@ -1,6 +1,6 @@
 ---
 name: sprint-triage
-description: Triage support tickets into approval-gated knowledge-base and Confluence publications.
+description: Use when triaging support tickets requiring approval-gated knowledge-base reports, GitLab merge-request review, or optional Confluence guidance.
 ---
 
 # Sprint Triage
@@ -31,7 +31,7 @@ For non-Pi+Herdr contexts, use a fresh subagent whenever the harness supports su
 
 ## Publication-plan approval gate
 
-Before `plan` can continue with `ready`, obtain explicit approval for an artifact with these exact headings:
+Before `plan` can continue with `ready`, obtain explicit approval for an artifact with these exact headings. The approved knowledge-base change is published through a GitLab merge request; a Confluence append is performed only when its approved publication fragment is non-empty:
 
 - level 1: `Knowledge base repository`
 - level 2: `Report`
