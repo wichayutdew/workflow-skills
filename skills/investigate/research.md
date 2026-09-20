@@ -27,7 +27,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/investigate/research.md`)
 
 Deep-research the approved scope. Do not write the destination file yet.
 

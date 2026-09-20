@@ -30,11 +30,10 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/work/plan.md`)
 
 Plan the work from intake. Read-only. Do not create a branch or worktree.
 
-The plan artifact must include these exact headings (per original `.pi/agent/workflows/work.workflow.yaml` gate artifactContract):
+The plan artifact must include these exact headings (per original `original workflow spec` gate artifactContract):
 - `## Goal / Acceptance Criteria`: observable outcome and criteria.
 - `## Non Goal`: explicitly excluded work.
 - `## Implementation Steps and Tests`: add/remove steps; test only when assessable benefit exists.

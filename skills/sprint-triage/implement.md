@@ -30,7 +30,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/sprint-triage/implement.md`)
 
 Write and commit only the approved knowledge-base files.
 

@@ -27,13 +27,11 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/sprint-triage/collect.md`)
 
 Collect every configured OpsBot ticket and its Slack thread. Do not mutate OpsBot, Slack, Git, or Confluence; write only the local evidence file required below.
 
 Input: `{{workflow.input}}`
 
-Read `~/.pi/agent/workflows/steps/sprint-triage/sprint-triage.yaml`. All API parameters come only from its `opsbot` configuration. Do not hardcode a channel, profile, ticket status, person, request topic, ticket date field, or ticket example.
 
 ---
 ## Hand-off Protocol

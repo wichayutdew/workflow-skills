@@ -27,7 +27,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/investigate/write-report.md`)
 
 Write only the approved report file. Mechanical.
 

@@ -30,7 +30,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/mr-review/plan.md`)
 
 Turn reviewer findings into comments the user can approve.
 

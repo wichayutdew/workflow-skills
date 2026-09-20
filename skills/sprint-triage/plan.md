@@ -30,7 +30,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/sprint-triage/plan.md`)
 
 Summarize collected tickets for two audiences. Do not mutate Git or Confluence.
 

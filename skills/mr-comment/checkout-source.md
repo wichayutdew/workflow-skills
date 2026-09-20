@@ -27,7 +27,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/mr-comment/checkout-source.md`)
 
 Check out the reviewed source branch. Mechanical only.
 

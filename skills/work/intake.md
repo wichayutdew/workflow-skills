@@ -27,7 +27,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/work/intake.md`)
 
 Retrieve the source brief. Do not create a branch or worktree.
 

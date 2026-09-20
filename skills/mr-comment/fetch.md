@@ -27,7 +27,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/mr-comment/fetch.md`)
 
 Fetch one GitHub PR or GitLab MR. Read-only. Prefer MCP over CLI.
 

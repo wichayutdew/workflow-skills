@@ -27,9 +27,8 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/work/publish.md`)
 
-Run step per .pi/agent/workflows/steps/work/publish.md; read/write .workflows/state/<session-key>/state.json.
+Run step per work/publish.md; read/write .workflows/state/<session-key>/state.json.
 
 ---
 ## Hand-off Protocol

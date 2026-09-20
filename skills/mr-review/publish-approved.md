@@ -27,7 +27,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/mr-review/publish-approved.md`)
 
 Publish only approved review actions. Prefer MCP over CLI.
 

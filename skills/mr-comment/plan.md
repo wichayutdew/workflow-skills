@@ -30,7 +30,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/mr-comment/plan.md`)
 
 Decide each unresolved review comment. Read-only on the bound checkout.
 

@@ -16,7 +16,7 @@ When running `plan.md`, enforce artifactContract:
 
 Sub-steps: `intake.md` → `plan.md` → `prepare-workspace`* → `implement.md` → `verify.md` → `publish.md` → done
 
-* Note: `.pi/agent/workflows/steps/work/prepare-workspace.md` mapped to workspace binding; if workspace creation fails, transition `gaps: plan`.
+* Note: `work/prepare-workspace.md` mapped to workspace binding; if workspace creation fails, transition `gaps: plan`.
 
 Transition rules (per original `.workflows/*.yaml`):
 - intake: `ready` → plan; `blocked` → $pause; `handoff` → intake; `gaps` → intake (if missing brief/Jira)

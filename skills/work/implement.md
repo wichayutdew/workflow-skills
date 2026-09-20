@@ -30,7 +30,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/work/implement.md`)
 
 Implement the approved plan in the bound worktree.
 

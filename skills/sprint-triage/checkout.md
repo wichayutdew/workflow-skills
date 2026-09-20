@@ -27,14 +27,12 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/sprint-triage/checkout.md`)
 
 Create the knowledge-base worktree. Mechanical only.
 
 Input: `{{workflow.input}}`
 Approved plan: `{{reviewed.artifact}}`
 
-Read `~/.pi/agent/workflows/steps/sprint-triage/sprint-triage.yaml`. Dates must be `YYYY-MM-DD YYYY-MM-DD`. Create a linked worktree and add `docs/sprint-triage-<start>-to-<end>`. Missing content dir or index is fine.
 
 `ready`: `workspace: {cwd: "<worktree-path>"}`.
 `handoff`: transient mechanical worktree work remains and requires no user input.

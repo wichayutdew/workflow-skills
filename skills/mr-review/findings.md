@@ -30,7 +30,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/mr-review/findings.md`)
 
 Review the fetched change. Do not publish. Do not soften findings.
 

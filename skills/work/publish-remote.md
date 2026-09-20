@@ -27,7 +27,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/work/publish-remote.md`)
 
 Push the verified branch and open or update the PR/MR. Prefer MCP over CLI.
 

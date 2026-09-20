@@ -27,7 +27,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/mr-comment/publish.md`)
 
 Commit, push, and reply to every verified approved review-comment fix. Prefer MCP over CLI.
 

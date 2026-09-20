@@ -30,7 +30,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/investigate/validate.md`)
 
 Check the draft against the approved goal. Read-only. Do not write the report file.
 

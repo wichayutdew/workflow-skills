@@ -30,7 +30,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/work/verify.md`)
 
 Independently check the implementation against the approved goal and acceptance criteria. Read-only.
 

@@ -27,7 +27,6 @@ valid `json` block; no prose inside JSON.
 
 ````
 
-## Full Step Prompt (Ported from `.pi/agent/workflows/steps/sprint-triage/publish.md`)
 
 Push the KB branch, open the MR, and insert the human guide at the top of Confluence. Prefer MCP.
 
@@ -35,7 +34,6 @@ Input: `{{workflow.input}}`
 Approved plan: `{{reviewed.artifact}}`
 Ledger: `{{last.summary}}`
 
-Read `~/.pi/agent/workflows/steps/sprint-triage/sprint-triage.yaml`.
 
 1. Push without force. Create the MR via GitLab MCP using the approved title and verified host template only. If none is verified, do not block or ask for confirmation: create it without description adjustment, read back its description as the template, then update only the managed region.
 2. Verify `confluence.appendMode` is `top`. Use the Atlassian MCP tool `atlassian_getConfluencePage` with the configured `cloudId`, configured `pageId`, `contentType: "page"`, and `contentFormat: "html"` to fetch the current page. Block if its version or hash drifted from the approved `Execution contract`.
