@@ -1,0 +1,1 @@
+{"name":"workflow-skills","skills":".agents/skills","workflows":null,"entry":".agents/skills","embedded_agents":true,"harnesses":["pi","chatgpt","claude-code","opencode","codex"]}
