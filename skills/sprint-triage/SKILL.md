@@ -1,6 +1,6 @@
 ---
 name: sprint-triage
-description: Triage support tickets into approval-gated knowledge-base publications reviewed through GitLab merge requests, with optional Confluence publication.
+description: Use when triaging support tickets requiring approval-gated knowledge-base reports, GitLab merge-request review, or optional Confluence guidance.
 ---
 
 # Sprint Triage
