@@ -34,12 +34,12 @@ The skill derives workspace, Git, Jira, PR/MR, and integration context from the 
 
 ## Pi adapter
 
-Each installed skill includes `scripts/run-pi.py`. From a skill directory, run:
+Each installed skill includes `scripts/run-pi.py`. When invoked from Pi inside Herdr, the skill directs Pi to launch this adapter automatically. To launch it directly from a skill directory, run:
 
 ```bash
 python3 scripts/run-pi.py "Investigate the failing deployment for PROJ-123"
 ```
 
-The adapter runs each stage in a fresh Pi process with its configured role, model, and thinking level. Inside Herdr, it opens a background horizontal split for that stage, waits for the artifact, and closes only the pane it created. It manages artifacts under `${XDG_STATE_HOME:-$HOME/.local/state}/workflow-skills/` and stops at approval gates. Resume an approved run with the exact command it prints.
+The adapter runs each stage in a fresh Pi process with its configured role, model, and thinking level. Inside Herdr, it opens an unfocused background horizontal split for that stage, waits for the artifact, and closes that child pane after its artifact is captured. It manages artifacts under `${XDG_STATE_HOME:-$HOME/.local/state}/workflow-skills/` and stops at approval gates. Resume an approved run with the exact command it prints.
 
-If Pi or a configured model is unavailable, use the root `SKILL.md` stages. Other harnesses use a fresh subagent for every stage when supported; otherwise they retain the same guided workflow in the active session, without Pi model selection or process isolation.
+If Pi, Herdr, or a configured model is unavailable, use the root `SKILL.md` stages. Other harnesses use a fresh subagent for every stage when supported; otherwise they retain the same guided workflow in the active session, without Pi model selection or process isolation.

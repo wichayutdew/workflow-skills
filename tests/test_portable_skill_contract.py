@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "skills"
+README = ROOT / "README.md"
 EXPECTED = {
     "work": ("intake", "prepare-workspace.md"),
     "investigate": ("intake", "research.md"),
@@ -28,6 +29,10 @@ FORBIDDEN = (
     "invoke" + ".py",
     ".agents" + "/skills",
 )
+REQUIRED_PI_HERDR_ROUTE = (
+    "When running in Pi inside Herdr (`HERDR_ENV=1`), run the bundled adapter",
+    "Do not execute the stage prompts inline in that environment.",
+)
 
 
 class PortableSkillContractTests(unittest.TestCase):
@@ -46,12 +51,17 @@ class PortableSkillContractTests(unittest.TestCase):
             for heading in REQUIRED_HEADINGS[name]:
                 self.assertIn(heading, text)
             self.assertIn("submit the complete artifact to Plannotator", text)
+            for required in REQUIRED_PI_HERDR_ROUTE:
+                self.assertIn(required, text)
             self.assertNotEqual(start, "")
             adapter_text = (root / "scripts" / "run-pi.py").read_text()
             self.assertNotIn("'" + "limit':", adapter_text)
             self.assertIn('"herdr", "pane", "split"', adapter_text)
             self.assertIn('"--direction", "down"', adapter_text)
             self.assertIn('"herdr", "pane", "close", pane_id', adapter_text)
+        readme = README.read_text()
+        self.assertIn("When invoked from Pi inside Herdr, the skill directs Pi to launch this adapter automatically.", readme)
+        self.assertIn("closes that child pane after its artifact is captured", readme)
 
     def test_no_extension_placeholders_or_stale_paths_remain(self):
         for path in SKILLS.rglob("*.md"):
