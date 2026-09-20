@@ -1,7 +1,7 @@
 {
   "name": "workflow-skills",
   "version": "1.0.0",
-  "description": "Ported from .pi/agent/workflows. Fresh agent per step with embedded profiles.",
+  "description": "Ported from original workflow harness. Fresh agent per step with embedded profiles.",
   "skills": "skills",
   "entry": "skills",
   "embedded_agents": true,
