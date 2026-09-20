@@ -46,4 +46,4 @@ Base scope, sources, and open questions on the intake evidence. Do not invent sy
 
 ---
 ## Hand-off Protocol
-Read previous `.workflows/state/<session-key>/state.json`. Write updated state with this step's output. Fresh agent session for next step.
+Read previous `.workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json`. Write updated state with this step's output. Fresh agent session for next step.

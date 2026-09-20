@@ -48,4 +48,4 @@ For GitLab, construct publication actions before submitting this artifact. For e
 
 ---
 ## Hand-off Protocol
-Read previous `.workflows/state/<session-key>/state.json`. Write updated state with this step's output. Fresh agent session for next step.
+Read previous `.workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json`. Write updated state with this step's output. Fresh agent session for next step.

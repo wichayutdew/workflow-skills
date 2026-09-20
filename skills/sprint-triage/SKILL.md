@@ -4,7 +4,7 @@ description: Use when running the sprint-triage pipeline with fresh agent per st
 ---
 
 # sprint-triage
-Master skill. Sub-steps below. Hand-off via .workflows/state/<session-key>/state.json.
+Master skill. Sub-steps below. Hand-off via .workflows/state/`work-<timestamp>` or named session id (e.g., `work-2026-09-20-abc`)/state.json.
 
 ## Extension Features Ported
 permissions: [read, ls, bash, mcp]; mcp: [atlassian, context7]
