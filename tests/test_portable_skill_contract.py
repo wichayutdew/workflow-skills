@@ -100,6 +100,8 @@ class PortableSkillContractTests(unittest.TestCase):
             bin_directory = temporary_path / "bin"
             bin_directory.mkdir()
             log_path = temporary_path / "herdr.log"
+            command_path = temporary_path / "herdr-command.txt"
+            output_path = temporary_path / "herdr-output.txt"
             herdr = bin_directory / "herdr"
             herdr.write_text(
                 "#!/usr/bin/env python3\n"
@@ -112,8 +114,18 @@ class PortableSkillContractTests(unittest.TestCase):
                 "    print(json.dumps({'result': {'pane': {'pane_id': 'fake:pane'}}}))\n"
                 "elif args[:2] == ['pane', 'run']:\n"
                 "    log.open('a').write('run\\n')\n"
-                "    subprocess.run(['sh', '-c', args[3]], check=True)\n"
+                "    command = args[3]\n"
+                "    Path(os.environ['FAKE_HERDR_COMMAND']).write_text(command)\n"
+                "    result = subprocess.run(['fish', '-c', command], text=True, capture_output=True)\n"
+                "    Path(os.environ['FAKE_HERDR_OUTPUT']).write_text(result.stdout + result.stderr)\n"
+                "    result.check_returncode()\n"
                 "elif args[:2] == ['pane', 'wait-output']:\n"
+                "    marker = args[4]\n"
+                "    command = Path(os.environ['FAKE_HERDR_COMMAND']).read_text()\n"
+                "    output = Path(os.environ['FAKE_HERDR_OUTPUT']).read_text()\n"
+                "    if marker in command or marker not in output:\n"
+                "        log.open('a').write(f'wait-failed input={marker in command} output={marker in output} raw={output!r}\\n')\n"
+                "        raise SystemExit('completion marker check failed')\n"
                 "    log.open('a').write('wait-output\\n')\n"
                 "elif args[:2] == ['pane', 'close']:\n"
                 "    log.open('a').write('close\\n')\n"
@@ -144,10 +156,12 @@ class PortableSkillContractTests(unittest.TestCase):
                             "HERDR_ENV": "1",
                             "HERDR_PANE_ID": "fake:parent",
                             "FAKE_HERDR_LOG": str(log_path),
+                            "FAKE_HERDR_COMMAND": str(command_path),
+                            "FAKE_HERDR_OUTPUT": str(output_path),
                             "WORKFLOW_SKILLS_STATE_DIR": state_directory,
                         },
                     )
-                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.returncode, 0, result.stderr + log_path.read_text())
                 self.assertIn("approval required; resume with:", result.stdout)
                 self.assertEqual(
                     log_path.read_text().splitlines(),
