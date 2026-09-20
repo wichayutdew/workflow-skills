@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -85,6 +86,73 @@ class PortableSkillContractTests(unittest.TestCase):
             self.assertIn(f'"stage": "{start}"', result.stdout)
             self.assertIn('"--model"', result.stdout)
             self.assertIn('"--thinking"', result.stdout)
+
+    def test_pi_adapters_open_wait_and_close_herdr_stage_panes(self):
+        expected_stage_counts = {
+            "work": 2,
+            "investigate": 2,
+            "mr-review": 3,
+            "mr-comment": 3,
+            "sprint-triage": 2,
+        }
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            temporary_path = Path(temporary_directory)
+            bin_directory = temporary_path / "bin"
+            bin_directory.mkdir()
+            log_path = temporary_path / "herdr.log"
+            herdr = bin_directory / "herdr"
+            herdr.write_text(
+                "#!/usr/bin/env python3\n"
+                "import json, os, subprocess, sys\n"
+                "from pathlib import Path\n"
+                "args = sys.argv[1:]\n"
+                "log = Path(os.environ['FAKE_HERDR_LOG'])\n"
+                "if args[:2] == ['pane', 'split']:\n"
+                "    log.open('a').write('split\\n')\n"
+                "    print(json.dumps({'result': {'pane': {'pane_id': 'fake:pane'}}}))\n"
+                "elif args[:2] == ['pane', 'run']:\n"
+                "    log.open('a').write('run\\n')\n"
+                "    subprocess.run(['sh', '-c', args[3]], check=True)\n"
+                "elif args[:2] == ['pane', 'wait-output']:\n"
+                "    log.open('a').write('wait-output\\n')\n"
+                "elif args[:2] == ['pane', 'close']:\n"
+                "    log.open('a').write('close\\n')\n"
+                "else:\n"
+                "    raise SystemExit(f'unexpected Herdr command: {args}')\n"
+            )
+            pi = bin_directory / "pi"
+            pi.write_text(
+                "#!/usr/bin/env python3\n"
+                "print('## Machine-readable handoff')\n"
+                "print('```json')\n"
+                "print('{\\\"status\\\": \\\"ready\\\", \\\"remaining\\\": []}')\n"
+                "print('```')\n"
+            )
+            herdr.chmod(0o755)
+            pi.chmod(0o755)
+
+            for name, stage_count in expected_stage_counts.items():
+                log_path.write_text("")
+                with tempfile.TemporaryDirectory() as state_directory:
+                    result = subprocess.run(
+                        [sys.executable, str(SKILLS / name / "scripts" / "run-pi.py"), "example request"],
+                        text=True,
+                        capture_output=True,
+                        env={
+                            **os.environ,
+                            "PATH": f"{bin_directory}{os.pathsep}{os.environ['PATH']}",
+                            "HERDR_ENV": "1",
+                            "HERDR_PANE_ID": "fake:parent",
+                            "FAKE_HERDR_LOG": str(log_path),
+                            "WORKFLOW_SKILLS_STATE_DIR": state_directory,
+                        },
+                    )
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn("approval required; resume with:", result.stdout)
+                self.assertEqual(
+                    log_path.read_text().splitlines(),
+                    ["split", "run", "wait-output", "close"] * stage_count,
+                )
 
     def test_pi_adapters_reject_empty_requests(self):
         for name in EXPECTED:
