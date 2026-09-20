@@ -28,6 +28,18 @@ else:
     print(f"[CHATGPT] Spawn fresh session: agent={agent_name} model={model} step={step_md} state={payload['session_state_path']}")
     # Actual: subprocess / API call injecting agent_cfg + step_content + session_state
 
+# Transition logic: read state file; if previous status has 'gaps' or 'back', invoke previous step
+prev_state_path = payload.get("session_state_path", ".workflows/state/<session-key>/state.json").replace("<session-key>", "work")
+if os.path.exists(prev_state_path):
+    try:
+        prev_state = json.load(open(prev_state_path))
+        if prev_state.get("status") in ("gaps", "back", "invalid"):
+            prev_step = prev_state.get("prev_step")
+            if prev_step:
+                print(f"[TRANSITION] Back-circling to previous step: {prev_step}")
+    except Exception:
+        pass
+
 with open(f".workflows/state/{os.path.basename(step_md).replace('.md','.json')}-payload.json", "w") as f:
     json.dump(payload, f, indent=2)
 print("Payload written; generic spawn supports pi (delegate_task) and chatgpt (subprocess/API).")
