@@ -35,7 +35,7 @@ Read the specified file and treat it as the sole authoritative source for ticket
 4. Every ticket has a nonempty unique `ticketLink`, its complete `sourceRow` object, and a `slackThread` object with a positive integer `pagesRead`, `complete: true`, and a complete `messages` array.
 5. Ticket order matches selected-link order. Each message array is in chronological source order and retains every supported returned message field, including source text, author, timestamp, links, and formatting when returned.
 
-Re-read `~/.pi/agent/workflows/steps/sprint-triage/sprint-triage.yaml` only after that validation succeeds. Then fetch the Confluence page as HTML for existing-guide comparison and top-insertion context.
+Use `sprint-triage.yaml` in this skill directory only after that validation succeeds. If it is absent, ask the user to create it from `sprint-triage.example.yaml`, replace every placeholder locally, and keep the concrete file uncommitted. Then fetch the Confluence page as HTML for existing-guide comparison and top-insertion context.
 
 `ready`: validated evidence-file source data, both products, and the complete approval artifact are ready for review.
 `gaps`: the collection locator or evidence file is missing, generic/tool-activity-only, malformed, outside the permitted path, unreadable, hash- or byte-count-mismatched, invalid JSON, or incomplete/unverifiable structured collection evidence; it must be recollected before planning can continue. Report the factual failed validation in `remaining`.

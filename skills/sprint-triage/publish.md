@@ -16,7 +16,7 @@ Input: `the invoking request`
 Approved plan: `the approved plan artifact from this run`
 Ledger: `{{last.summary}}`
 
-Read `~/.pi/agent/workflows/steps/sprint-triage/sprint-triage.yaml`.
+Use `sprint-triage.yaml` in this skill directory. If it is absent, ask the user to create it from `sprint-triage.example.yaml`, replace every placeholder locally, and keep the concrete file uncommitted.
 
 1. Push without force. Create the MR via GitLab MCP using the approved title and verified host template only. If none is verified, do not block or ask for confirmation: create it without description adjustment, read back its description as the template, then update only the managed region.
 2. Verify `confluence.appendMode` is `top`. Use the Atlassian MCP tool `atlassian_getConfluencePage` with the configured `cloudId`, configured `pageId`, `contentType: "page"`, and `contentFormat: "html"` to fetch the current page. Block if its version or hash drifted from the approved `Execution contract`.

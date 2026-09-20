@@ -14,7 +14,7 @@ Collect every configured OpsBot ticket and its Slack thread. Do not mutate OpsBo
 
 Input: `the invoking request`
 
-Read `~/.pi/agent/workflows/steps/sprint-triage/sprint-triage.yaml`. All API parameters come only from its `opsbot` configuration. Do not hardcode a channel, profile, ticket status, person, request topic, ticket date field, or ticket example.
+Use `sprint-triage.yaml` in this skill directory. If it is absent, ask the user to create it from `sprint-triage.example.yaml`, replace every placeholder locally, and keep the concrete file uncommitted. All API parameters come only from its `opsbot` configuration. Do not hardcode a channel, profile, ticket status, person, request topic, ticket date field, or ticket example.
 
 ## Ticket collection
 

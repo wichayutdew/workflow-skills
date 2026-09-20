@@ -15,7 +15,7 @@ Create the knowledge-base worktree. Mechanical only.
 Input: `the invoking request`
 Approved plan: `the approved plan artifact from this run`
 
-Read `~/.pi/agent/workflows/steps/sprint-triage/sprint-triage.yaml`. Dates must be `YYYY-MM-DD YYYY-MM-DD`. Create a linked worktree and add `docs/sprint-triage-<start>-to-<end>`. Missing content dir or index is fine.
+Use `sprint-triage.yaml` in this skill directory. If it is absent, ask the user to create it from `sprint-triage.example.yaml`, replace every placeholder locally, and keep the concrete file uncommitted. Dates must be `YYYY-MM-DD YYYY-MM-DD`. Create a linked worktree and add `docs/sprint-triage-<start>-to-<end>`. Missing content dir or index is fine.
 
 `ready`: `workspace: {cwd: "<worktree-path>"}`.
 `handoff`: transient mechanical worktree work remains and requires no user input.
