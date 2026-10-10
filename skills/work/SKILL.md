@@ -17,12 +17,12 @@ Use the model and thinking level specified for each stage. Model selection does 
 
 | Stage | Prompt | Model | Thinking | Outcomes |
 | --- | --- | --- | --- | --- |
-| intake | [intake.md](intake.md) | `gateway/gemini-3.8-flash` | low | `ready` → plan; `blocked` → pause; `handoff` → intake |
-| plan | [plan.md](plan.md) | `gateway/gpt-6.1-sol` | high | `ready` → prepare-workspace; `gaps` → intake; `blocked` → pause; `handoff` → plan |
-| prepare-workspace | [prepare-workspace.md](prepare-workspace.md) | `gateway/gemini-3.8-flash` | low | `ready` → implement; `gaps` → plan; `blocked` → pause; `handoff` → prepare-workspace |
-| implement | [implement.md](implement.md) | `gateway/kimi-k3` | high | `ready` → verify; `blocked` → pause; `handoff` → implement |
-| verify | [verify.md](verify.md) | `gateway/grok-4.7` | high | `ready` → publish; `gaps` → implement; `blocked` → pause; `handoff` → verify |
-| publish | [publish-remote.md](publish-remote.md) | `gateway/gemini-3.8-flash` | low | `ready` → done; `blocked` → pause; `handoff` → publish |
+| intake | [intake.md](intake.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → plan; `blocked` → pause; `handoff` → intake |
+| plan | [plan.md](plan.md) | `nvidia/nemotron-3-ultra-550b-a55b:free` | high | `ready` → prepare-workspace; `gaps` → intake; `blocked` → pause; `handoff` → plan |
+| prepare-workspace | [prepare-workspace.md](prepare-workspace.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → implement; `gaps` → plan; `blocked` → pause; `handoff` → prepare-workspace |
+| implement | [implement.md](implement.md) | `poolside/laguna-s-2.1:free` | high | `ready` → verify; `blocked` → pause; `handoff` → implement |
+| verify | [verify.md](verify.md) | `cohere/north-mini-code:free` | high | `ready` → publish; `gaps` → implement; `blocked` → pause; `handoff` → verify |
+| publish | [publish-remote.md](publish-remote.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → done; `blocked` → pause; `handoff` → publish |
 
 ## Plan approval gate
 

@@ -17,12 +17,12 @@ Use the model and thinking level specified for each stage. Model selection does 
 
 | Stage | Prompt | Model | Thinking | Outcomes |
 | --- | --- | --- | --- | --- |
-| fetch | [fetch.md](fetch.md) | `gateway/gemini-3.8-flash` | low | `ready` → checkout-source; `blocked` → pause; `handoff` → fetch |
-| checkout-source | [checkout-source.md](checkout-source.md) | `gateway/gemini-3.8-flash` | low | `ready` → plan; `gaps` → fetch; `blocked` → pause; `handoff` → checkout-source |
-| plan | [plan.md](plan.md) | `gateway/gpt-6.1-sol` | high | `ready` → implement; `gaps` → fetch; `blocked` → pause; `handoff` → plan |
-| implement | [implement.md](implement.md) | `gateway/kimi-k3` | high | `ready` → verify; `blocked` → pause; `handoff` → implement |
-| verify | [verify.md](verify.md) | `gateway/grok-4.7` | high | `ready` → deliver; `gaps` → implement; `blocked` → pause; `handoff` → verify |
-| deliver | [publish.md](publish.md) | `gateway/gemini-3.8-flash` | low | `ready` → done; `gaps` → implement; `blocked` → pause; `handoff` → deliver |
+| fetch | [fetch.md](fetch.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → checkout-source; `blocked` → pause; `handoff` → fetch |
+| checkout-source | [checkout-source.md](checkout-source.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → plan; `gaps` → fetch; `blocked` → pause; `handoff` → checkout-source |
+| plan | [plan.md](plan.md) | `nvidia/nemotron-3-ultra-550b-a55b:free` | high | `ready` → implement; `gaps` → fetch; `blocked` → pause; `handoff` → plan |
+| implement | [implement.md](implement.md) | `poolside/laguna-s-2.1:free` | high | `ready` → verify; `blocked` → pause; `handoff` → implement |
+| verify | [verify.md](verify.md) | `cohere/north-mini-code:free` | high | `ready` → deliver; `gaps` → implement; `blocked` → pause; `handoff` → verify |
+| deliver | [publish.md](publish.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → done; `gaps` → implement; `blocked` → pause; `handoff` → deliver |
 
 ## Comment-plan approval gate
 

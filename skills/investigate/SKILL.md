@@ -17,11 +17,11 @@ Use the model and thinking level specified for each stage. Model selection does 
 
 | Stage | Prompt | Model | Thinking | Outcomes |
 | --- | --- | --- | --- | --- |
-| intake | [intake.md](intake.md) | `gateway/gemini-3.8-flash` | low | `ready` → plan; `blocked` → pause; `handoff` → intake |
-| plan | [plan.md](plan.md) | `gateway/gpt-6.1-sol` | high | `ready` → research; `gaps` → intake; `blocked` → pause; `handoff` → plan |
-| research | [research.md](research.md) | `gateway/gpt-6.1-sol` | high | `ready` → validate; `blocked` → pause; `handoff` → research |
-| validate | [validate.md](validate.md) | `gateway/grok-4.7` | high | `ready` → write-report; `gaps` → research; `blocked` → pause; `handoff` → validate |
-| write-report | [write-report.md](write-report.md) | `gateway/gemini-3.8-flash` | low | `ready` → done; `gaps` → validate; `blocked` → pause; `handoff` → write-report |
+| intake | [intake.md](intake.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → plan; `blocked` → pause; `handoff` → intake |
+| plan | [plan.md](plan.md) | `nvidia/nemotron-3-ultra-550b-a55b:free` | high | `ready` → research; `gaps` → intake; `blocked` → pause; `handoff` → plan |
+| research | [research.md](research.md) | `poolside/laguna-s-2.1:free` | high | `ready` → validate; `blocked` → pause; `handoff` → research |
+| validate | [validate.md](validate.md) | `cohere/north-mini-code:free` | high | `ready` → write-report; `gaps` → research; `blocked` → pause; `handoff` → validate |
+| write-report | [write-report.md](write-report.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → done; `gaps` → validate; `blocked` → pause; `handoff` → write-report |
 
 ## Scope approval gate
 

@@ -17,10 +17,10 @@ Use the model and thinking level specified for each stage. Model selection does 
 
 | Stage | Prompt | Model | Thinking | Outcomes |
 | --- | --- | --- | --- | --- |
-| fetch | [fetch.md](fetch.md) | `gateway/gemini-3.8-flash` | low | `ready` → review; `blocked` → pause; `handoff` → fetch |
-| review | [findings.md](findings.md) | `gateway/grok-4.7` | high | `ready` → plan; `gaps` → fetch; `blocked` → pause; `handoff` → review |
-| plan | [plan.md](plan.md) | `gateway/gpt-6.1-sol` | high | `ready` → publish; `gaps` → review; `blocked` → pause; `handoff` → plan |
-| publish | [publish-approved.md](publish-approved.md) | `gateway/gemini-3.8-flash` | low | `ready` → done; `blocked` → pause; `handoff` → publish |
+| fetch | [fetch.md](fetch.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → review; `blocked` → pause; `handoff` → fetch |
+| review | [findings.md](findings.md) | `cohere/north-mini-code:free` | high | `ready` → plan; `gaps` → fetch; `blocked` → pause; `handoff` → review |
+| plan | [plan.md](plan.md) | `nvidia/nemotron-3-ultra-550b-a55b:free` | high | `ready` → publish; `gaps` → review; `blocked` → pause; `handoff` → plan |
+| publish | [publish-approved.md](publish-approved.md) | `nvidia/nemotron-3.5-lightning:free` | low | `ready` → done; `blocked` → pause; `handoff` → publish |
 
 ## Review approval gate
 
