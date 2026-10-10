@@ -1,5 +1,5 @@
 ---
-name: act-mkt-mr-comment
+name: mr-comment
 description: Resolve PR or merge-request review comments through evidence collection, planning, implementation, verification, and publication.
 ---
 
