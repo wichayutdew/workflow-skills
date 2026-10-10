@@ -28,7 +28,6 @@ Invoke one of the five skills with a natural-language request:
 - `investigate`
 - `mr-review`
 - `mr-comment`
-- `sprint-triage`
 
 The skill derives workspace, Git, Jira, PR/MR, and integration context from the request and active environment. It asks only for missing business information, authorization, or access. It does not require workflow variables, restart metadata, or a state path. When the harness supports subagents, every stage runs in a fresh subagent that receives only the request, previous stage artifact, and stage prompt; the parent does not pass conversational context between stages.
 
