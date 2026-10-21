@@ -15,7 +15,13 @@ The only user wait is the complete plan-review gate below. Put every user-answer
 
 A `blocked` outcome is terminal only when safe continuation is impossible: report the factual blocker, never bypass required evidence, access, authority, or safety checks. Report recoverable stale evidence through the declared recovery route instead.
 
-Use the runtime's configured model by default. Thinking levels express the stage's relative reasoning needs; use the nearest supported effort when adjustable. No private model service, model switching or subagent support is required. Execute inline unless the user/runtime authorizes another method. Model selection does not approve a plan, authorize delegation, or authorize publication.
+## Model selection
+
+- Never use a flagship model, including for reviewers, subagents, retries or fallbacks. Lowering its thinking effort does not make a flagship model eligible. Near-flagship means a strong reasoning/coding tier below the provider's flagship, not its top model.
+- Use the cheapest available non-flagship model suitable for the stage: cheap/fast with low effort for retrieval, worktree/branch operations, running known commands, CI polling, formatting and approved publication; mid-tier with medium effort for routine implementation and bounded analysis; near-flagship with high effort for extensive design/planning, difficult diagnosis and substantive regression/performance review.
+- Tables give the starting tier/effort. Escalate routine work to near-flagship/high only when complexity or failed attempts demonstrate that more reasoning is needed. Formatting already validated findings uses cheap/fast/low; reopening technical judgments uses near-flagship/high. For mixed work, resolve the demanding judgment first, then return mechanical follow-up to cheap/fast/low.
+- Resolve tiers from the runtime's verified model catalog; no vendor model name or private routing service is required. Do not blindly inherit the runtime default or an unverified alias. If the suggested tier is unavailable, choose the cheapest suitable verified non-flagship alternative and preserve the task’s effort (for example, mid-tier/low for mechanical Git work when cheap models are unavailable). If no eligible model is available or model selection cannot avoid a flagship/unknown default, report the limitation instead of silently using it.
+- Use the closest supported effort setting. Execute inline unless the user/runtime authorizes another method; model guidance does not authorize delegation, approve a plan or authorize publication.
 
 ## Continuation and recovery
 
@@ -29,12 +35,12 @@ Use the runtime's configured model by default. Thinking levels express the stage
 
 | Stage | Prompt | Model | Thinking | Outcomes |
 | --- | --- | --- | --- | --- |
-| intake | [intake.md](intake.md) | runtime default | low | `ready` → plan; `blocked` → terminal report; `handoff` → intake |
-| plan | [plan.md](plan.md) | runtime default | high | `ready` → plan review, then prepare-workspace on approval; `gaps` → intake; `blocked` → terminal report; `handoff` → plan |
-| prepare-workspace | [prepare-workspace.md](prepare-workspace.md) | runtime default | low | `ready` → implement; `gaps` → plan; `blocked` → terminal report; `handoff` → prepare-workspace |
-| implement | [implement.md](implement.md) | runtime default | high | `ready` → verify; `refresh` → plan; `blocked` → terminal report; `handoff` → implement |
-| verify | [verify.md](verify.md) | runtime default | high | `ready` → publish; `gaps` → implement; `blocked` → terminal report; `handoff` → verify |
-| publish | [publish-remote.md](publish-remote.md) | runtime default | low | `ready` → done; `done` → local report; `gaps` → implement; `refresh` → plan; `blocked` → terminal report; `handoff` → publish |
+| intake | [intake.md](intake.md) | cheap/fast | low | `ready` → plan; `blocked` → terminal report; `handoff` → intake |
+| plan | [plan.md](plan.md) | near-flagship | high | `ready` → plan review, then prepare-workspace on approval; `gaps` → intake; `blocked` → terminal report; `handoff` → plan |
+| prepare-workspace | [prepare-workspace.md](prepare-workspace.md) | cheap/fast | low | `ready` → implement; `gaps` → plan; `blocked` → terminal report; `handoff` → prepare-workspace |
+| implement | [implement.md](implement.md) | mid-tier | medium | `ready` → verify; `refresh` → plan; `blocked` → terminal report; `handoff` → implement |
+| verify | [verify.md](verify.md) | mid-tier | medium | `ready` → publish; `gaps` → implement; `blocked` → terminal report; `handoff` → verify |
+| publish | [publish-remote.md](publish-remote.md) | cheap/fast | low | `ready` → done; `done` → local report; `gaps` → implement; `refresh` → plan; `blocked` → terminal report; `handoff` → publish |
 
 ## Plan approval gate
 

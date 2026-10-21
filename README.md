@@ -33,7 +33,7 @@ npx skills remove --all
 
 Invoke a skill with a natural-language request. The skill derives repository, tracker and review context from the request and active environment; no workflow engine, adapter, state-path argument or private model service is required.
 
-Run stages in the current agent unless the user/runtime authorizes another execution method. Use the runtime's configured model; stage thinking levels express relative reasoning needs, not a requirement to install or switch models. Missing model-routing or subagent support does not block execution.
+Run stages in the current agent unless the user/runtime authorizes another execution method. Follow each skill's model/effort table: cheap/fast with low effort for mechanical work, mid-tier with medium effort for routine implementation, and near-flagship with high effort for extensive planning and substantive review. Never use a flagship model, even as a reviewer/fallback or at low effort. Verify model tiers rather than blindly inheriting the runtime default; if no eligible non-flagship selection is possible, report that limitation. No private model-routing service or subagent capability is required.
 
 Read the linked stage instructions and follow their outcome routes automatically. Present complete plans and exact publication actions at the skill's approval gate. Plannotator is optional: use it when available, otherwise save the Markdown artifact and obtain explicit chat approval. Resume valid approval after continuation; revise it when scope or assumptions materially change.
 
