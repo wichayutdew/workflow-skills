@@ -1,10 +1,19 @@
 # workflow-skills
 
-Portable guided workflows migrated from `pi-workflows`.
+Portable workflows for software work, investigations and hosted code reviews.
+
+## Skills
+
+| Skill | Purpose |
+| --- | --- |
+| [work](skills/work/SKILL.md) | Implement scoped changes using existing code, meaningful verification and approved delivery. |
+| [investigate](skills/investigate/SKILL.md) | Research a question and deliver an evidence-backed report, hosted description or chat answer. |
+| [mr-review](skills/mr-review/SKILL.md) | Find introduced regressions and performance degradation; leave business/style nits to the user. |
+| [mr-comment](skills/mr-comment/SKILL.md) | Validate review feedback, apply approved fixes and deliver verified replies incrementally. |
 
 ## Install
 
-After this repository is pushed, install directly from GitHub; npm publication is not required:
+Install this repository directly; npm publication is not required:
 
 ```bash
 npx skills add wichayutdew/workflow-skills
@@ -22,23 +31,18 @@ npx skills remove --all
 
 ## Use
 
-Invoke one of the five skills with a natural-language request:
+Invoke a skill with a natural-language request. The skill derives repository, tracker and review context from the request and active environment; no workflow engine, adapter, state-path argument or private model service is required.
 
-- `work`
-- `investigate`
-- `mr-review`
-- `mr-comment`
+Run stages in the current agent unless the user/runtime authorizes another execution method. Use the runtime's configured model; stage thinking levels express relative reasoning needs, not a requirement to install or switch models. Missing model-routing or subagent support does not block execution.
 
-The skill derives workspace, Git, Jira, PR/MR, and integration context from the request and active environment. It asks only for missing business information, authorization, or access. It does not require workflow variables, restart metadata, or a state path. When the harness supports subagents, every stage runs in a fresh subagent that receives only the request, previous stage artifact, and stage prompt; the parent does not pass conversational context between stages.
+Read the linked stage instructions and follow their outcome routes automatically. Present complete plans and exact publication actions at the skill's approval gate. Plannotator is optional: use it when available, otherwise save the Markdown artifact and obtain explicit chat approval. Resume valid approval after continuation; revise it when scope or assumptions materially change.
 
-## Pi adapter
+Use available connectors, authenticated public host CLIs/APIs and local tools appropriate to the task. Discover capabilities and access rather than assuming particular tool names or a company environment. Jira and Linear are optional tracker examples. Traffic evidence uses whichever authorized telemetry/analytics source is available.
 
-Each installed skill includes `scripts/run-pi.py`. When invoked from Pi inside Herdr, the skill directs Pi to launch this adapter automatically. To launch it directly from a skill directory, run:
+Keep complete evidence through readable source references and reconcile remote state before retrying mutations. Work and code-changing comment delivery check required CI for the actual source commit, including associated merge-result pipelines. No-findings reviews finish locally unless a published summary was requested.
+
+## Validation
 
 ```bash
-python3 scripts/run-pi.py --stage intake --request "Investigate the failing deployment for PROJ-123"
+python3 scripts/validate_skills.py
 ```
-
-The adapter runs exactly one requested stage in a fresh interactive Pi process with its configured role, model, and thinking level. Inside Herd, it opens an unfocused background horizontal split, waits for the child completion tool to write and signal a JSON handoff, and then closes that child pane. It prints the handoff path and validated contents from `${XDG_STATE_HOME:-$HOME/.local/state}/workflow-skills/`; the invoking main agent decides whether to run another stage, retry, block, or request approval.
-
-If Pi or Herd is unavailable, use a fresh subagent for each stage when the harness supports subagents. If no subagent capability exists, execute the guided stages in the main agent pane. In both fallbacks, use the root `SKILL.md` prompts without Pi model selection or process isolation.

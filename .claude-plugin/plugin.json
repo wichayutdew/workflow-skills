@@ -1,1 +1,9 @@
-{"skills":["work","mr-review","mr-comment","investigate","sprint-triage"],"bucket":"skills"}
+{
+  "skills": [
+    "work",
+    "mr-review",
+    "mr-comment",
+    "investigate"
+  ],
+  "bucket": "skills"
+}
