@@ -1,6 +1,6 @@
 {
   "name": "workflow-skills",
   "version": "1.0.0",
-  "description": "Portable guided workflows for software changes, investigations and hosted code reviews.",
+  "description": "Portable guided workflows for software changes, investigation reports, backlog breakdowns and hosted code reviews.",
   "skills": "skills"
 }
