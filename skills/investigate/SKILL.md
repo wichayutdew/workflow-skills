@@ -24,13 +24,19 @@ Apply this format to plans, reports, reviews, replies and chat responses:
 
 Read each linked step prompt before executing it. Track the current step, completed outputs, remaining steps, and review decision in the continuation record. Follow the listed order and advance to the next step immediately when its prerequisites are met; a progress update, working outline, completed research, or saved draft is not a handoff or completion condition.
 
-Continue independent work while resolving material questions. Missing optional sources become explicit limitations. Wait only for required user input, a running human review, an explicit pause/cancellation, or a factual blocker that prevents further authorized work. State the exact blocker and retained progress. Honor explicit user/AGENTS requirements for additional approval gates.
+Continue independent work while resolving material questions. Missing optional sources become explicit limitations. Pause dependent work for required user input, review, an explicit pause/cancellation, or a factual blocker that prevents further authorized work. State the exact blocker and retained progress. Honor explicit user/AGENTS requirements for additional approval gates.
 
-Before yielding or finishing, check every remaining step: execute any step that is ready, and launch the required review yourself when its artifact is ready. Do not end with an offer to continue, ask whether to run the next required step, or rely on an automatic Stop hook. A running Plannotator session must be awaited in this turn until it exits.
+Before finishing, execute any independent ready step. When the review artifact is ready, submit it through Plannotator Inbox, notify the user, and end the turn without waiting for a decision.
 
 ## Task directory
 
 Every new investigation creates a ticket-ID-plus-description directory (description only without a ticket) under the captured invocation directory. Follow [task directory](generic/task-directory.md) during intake; persist the plan, local report and `.task-context.json` there. Revisions reuse the absolute root. A later `breakdown` request inherits that directory and adds its own plan/draft without replacing investigation artifacts. Explicit canonical report destinations remain authoritative.
+
+## Task artifact location
+
+Immediately after creating a new, empty task root, run `python3 /absolute/skill/scripts/cleanup-workspaces.py register-root <absolute-root>` before creating task artifacts or repositories. This creates the owned task ledger and registers the root even when no Git repository is needed. A continuation reuses its recorded root and must not register it as new. On an explicit cleanup request, use the cleanup helper to remove the complete owned task root, including all artifacts.
+
+For a new task, establish one absolute task root before writing any files. Keep all task-specific plans, manifests, references, evidence, reports, scratch files, review actions and cleanup records inside `<root>` (the existing investigation plan, report and context remain at the root), and repository checkouts under `<root>`. Set `WORKFLOW_SKILLS_CLEANUP_LEDGER=<root>/.artifacts/cleanup-ledger.json` and `WORKFLOW_SKILLS_REGISTER_LEDGER=1` in every worker that creates resources. Record the root and ledger in the task checkpoint and reuse them on continuation. Never place task files beside the task root. A user-specified canonical destination or an instruction requiring an external review copy remains authoritative; record it and keep a local copy in the root. Do not move existing tasks or override their recorded paths.
 
 ## Workflow
 
@@ -56,7 +62,7 @@ Adapt the headings to the question and audience. Do not force engineering rollou
 
 ## Review loop
 
-Use [the Plannotator review procedure](generic/plannotator-review.md) for the complete report and each revision. Consume the decision before advancing or finishing.
+Use [the Plannotator review procedure](generic/plannotator-review.md) for the complete report and each revision. End the turn after notifying the user; consume the decision before advancing on a later turn.
 
 Use the latest user-edited report as canonical. Feedback changes that same report; research further when needed, preserve agreed content, and present the revised result with a short account of material changes. Stay in this loop without a fixed iteration limit. Silence, a tool launch, or presenting the report does not mean it is accepted. On explicit acceptance or satisfaction, finish and retain the accepted report reference/version for a possible later breakdown request.
 

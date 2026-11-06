@@ -4,9 +4,9 @@ Inspect code only in local Git clones searched with `rg`. Do not use Sourcegraph
 
 ## Location
 
-- `<root>` is set by the calling skill: work uses `workspace.root`; mr-review uses `~/repositories/mr-review`; other workflows use a dedicated task directory under `~/repositories/<skill-name>/<task-id>/`. Reuse an already bound checkout without syncing it when its branch/revision must stay unchanged.
-- `<repo-name>` = last segment of the remote project path (`.../example.git` → `example`). If two needed repos share a name, use `<group>__<repo>`.
-- `<dir>` = `<root>/<repo-name>`.
+- Capture the invoking cwd before any `cd`. For new work, the task root is `<launchDirectory>/<ticket-ID-or-short-summary>`; see [Task workspace](task-workspace.md). The launch repository does not establish the affected repository set.
+- Use verified origins and distinct safe repository names. Discovery/backing clones go under `<task-root>/.sources/<name>`, separate from `<task-root>/<name>` branch worktrees. To use `repo-sync.sh` for discovery, pass `<task-root>/.sources` as root and `REPO_DIRNAME=<unique-name>` when names collide; record its actual returned path/SHA.
+- An already bound checkout with required branch/revision or prior edits must not be synced or switched. Resume its recorded absolute path.
 
 ## Get or refresh: `scripts/repo-sync.sh`
 
@@ -34,4 +34,4 @@ Start with `rg --files` to discover paths, then use `rg -n` for content. Narrow 
 
 - Record every repo used as evidence: url, `dir`, searched SHA.
 - Clones made for inspection are read-only: never commit, push, stash, reset or clean them.
-- New clones and side worktrees are automatically registered in the shared cleanup ledger. Keep them until the user requests cleanup; then follow [Workspace cleanup](cleanup.md). Existing reused checkouts are not enrolled.
+- New clones and side worktrees are automatically registered in the task cleanup ledger. Keep them until the user requests cleanup; then follow [Workspace cleanup](cleanup.md). Existing reused checkouts are not enrolled.
