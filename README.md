@@ -56,7 +56,7 @@ Use available tools appropriate to the task rather than assuming company service
 
 Only work and code-changing mr-comment delivery wait for required CI on the published source commit, including verified merged-result pipelines where applicable. MR review reads current pipeline status as context and proceeds without polling or requiring green CI. No-action reviews record their plan and finish locally unless a published summary was requested.
 
-Repository workflows record only newly created clones/worktrees for cleanup. On an explicit “clean everything up” instruction, use the bundled cleanup helper as described in each skill's `generic/cleanup.md`. It removes tracked workflow resources, including dirty temporary checkouts, while preserving reused existing repositories. The default ledger is `~/.local/state/workflow-skills/workspaces.json`; override it with `WORKFLOW_SKILLS_CLEANUP_LEDGER` consistently across workers and resumptions. This namespace is separate from any act-mkt installation. Runtime-managed worktrees use their native cleanup facility before ledger reconciliation.
+Repository workflows register new task roots and newly created clones/worktrees for cleanup. Task artifacts and the task-local cleanup ledger live under `<root>/.artifacts/`; pass `WORKFLOW_SKILLS_CLEANUP_LEDGER` and `WORKFLOW_SKILLS_REGISTER_LEDGER=1` to resource-creating workers. On an explicit “clean everything up” instruction, the bundled helper removes tracked resources and verified owned task roots, preserving reused repositories. It also supports the legacy shared ledger at `~/.local/state/workflow-skills/workspaces.json`. Runtime-managed worktrees use their native cleanup facility before ledger reconciliation.
 
 ## Validation
 
