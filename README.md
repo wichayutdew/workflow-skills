@@ -34,11 +34,19 @@ npx skills remove --all
 
 Invoke a skill with a natural-language request. The skill derives repository, tracker and review context from the request and active environment; no workflow engine, adapter, state-path argument or private model service is required.
 
-Work, MR review, and MR comment follow their declared stage routes and approval gates. The parent coordinates bounded workers and checks evidence; where model selection or delegation is unavailable, use the configured model or continue inline. Respect explicit user choices and available runtime capabilities.
+| Workflow | Planning and human decision |
+| --- | --- |
+| `work` | Review the outcome, observable acceptance criteria, useful diagram and exact actions; explicitly approve before implementation. |
+| `investigate` | Refine material scope before research, then produce and refine the Markdown report. No formal plan approval. |
+| `breakdown` | Refine the complete backlog and destination; explicitly approve before tracker creation. |
+| `mr-comment` | Recover the matching task across conversations or use verified standalone intake; debate interpretation, changes and exact replies before approval. |
+| `mr-review` | Show the read-only coverage approach, validate findings and discuss exact comments; approve publication. No-findings results stay local. |
 
-Investigation produces a report and repeats the user-feedback loop until it is accepted. It supports RFC and detailed investigation-result templates, plus user-supplied formats. Breakdown reads a report, drafts an epic and stories with descriptions, brief implementation steps and acceptance criteria, then refines the draft until the user explicitly approves creating it in the selected tracker. Report acceptance alone never creates tickets.
+Review plans in the active conversation. Lead with acceptance criteria, a useful diagram and the exact decision; keep implementation detail and machine-readable state in the linked complete artifact. Use host-native Plan mode when available; skills cannot switch host-controlled modes themselves. Conversation approval also works without a separate application or mode-switch tool.
 
-Every skill has a plan step. `workflows/plan.md` contains the step prompt; `generic/plan-template.md` contains only the plan structure. Investigation and breakdown use working plans without an extra upfront approval gate. Implementation/review publication and tracker creation keep their own explicit approval requirements. Resume valid approval after interruption; re-review material scope or destination changes.
+Every skill retains its working plan and resumable task context. Reuse valid approval after interruption and refresh only affected scope when requirements, review heads or publication actions change. Report acceptance does not authorize tracker creation. Preserve existing task paths and confirmed action IDs across later conversations; missing mapped context requires recovery, not a duplicate task.
+
+The parent coordinates bounded workers and checks evidence. When model selection or delegation is unavailable, use the configured model or continue inline. No particular runtime or company service is required.
 
 ## Skill layout
 
