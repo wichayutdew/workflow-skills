@@ -13,7 +13,7 @@ Use the CLI for all PR/MR metadata, diffs, discussions, comments, MR/PR create/u
 
 ## Addressing
 
-- Preserve the original PR/MR URL as the review identity. When a configured CodeMaster proxy serves a different GitLab hostname, verify the requested project's path and external URL through a read-only project metadata query before using that proxy; do not infer the mapping from authentication success alone.
+- Preserve the original PR/MR URL as the review identity. When a configured proxy serves a different GitLab hostname, verify the requested project's path and external URL through a read-only project metadata query before using that proxy; do not infer the mapping from authentication success alone.
 - Pass the verified host explicitly (`--hostname <host>` for `glab api`/`gh api`; `-R <host>/<project>` for `glab mr …`/`gh pr …`) where supported. If the CLI rejects a configured proxy's `host:port`, use its verified configured default or repository context and an explicit project API path; do not drop the port or substitute an unverified host.
 - GitLab API project id = URL-encoded full path: `jq -rn --arg p '<group/sub/repo>' '$p|@uri'`.
 - Paginate and merge: `glab api --paginate … | jq -s add`; `gh api --paginate … | jq -s add`.
